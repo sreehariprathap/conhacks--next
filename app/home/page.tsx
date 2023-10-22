@@ -7,56 +7,57 @@ const Home = () => {
   ]
   const schedules = [
     {
-      classData : {
-        name:"Prog 8021",
-        start:"10.00",
-        end:"13.00",
-        isAssignments:false,
-        isExamination:false,
-        classroom: "3F06"
+      classData: {
+        name: "Prog 8021",
+        start: "10.00",
+        end: "13.00",
+        isAssignments: false,
+        isExamination: false,
+        classroom: "3F06",
       },
       busData: {
         go: {
           start: "9.00 ",
           travelTime: 30,
-          busNumber:[6],
+          busNumber: [6],
           isMultiBus: false,
-        }, back:{
+        },
+        back: {
           start: "13.30 ",
           travelTime: 30,
-          busNumber:[8],
+          busNumber: [8],
           isMultiBus: false,
-        }
-      }
-      
+        },
+      },
     },
     {
-      classData : {
-        name:"Prog 8022",
-        start:"19.00",
-        end:"20.00",
-        isAssignments:false,
-        isExamination:false,
-        classroom: "3F06"
+      classData: {
+        name: "Prog 8022",
+        start: "19.00",
+        end: "20.00",
+        isAssignments: false,
+        isExamination: false,
+        classroom: "3F06",
       },
       busData: {
         go: {
           start: "18.00 ",
           travelTime: 30,
-          busNumber:[6],
+          busNumber: [6],
           isMultiBus: false,
-        }, back:{
+        },
+        back: {
           start: "20.30 ",
           travelTime: 30,
-          busNumber:[8],
+          busNumber: [8],
           isMultiBus: false,
-        }
-      }
-      
+        },
+      },
     },
   ]
   return (
-    <div className="flex flex-row gap-5 w-[100%]">
+    <div className="flex flex-col gap-5 w-[100%]">
+      <h1 className="text-3xl font-medium mb-3">Todays Schedule</h1>
       <div className="w-10 hidden">
         <ul className="flex flex-col gap-10">
           {times.map((time) => (
@@ -69,10 +70,10 @@ const Home = () => {
           ))}
         </ul>
       </div>
-      <div className="w-full">
-        {schedules.map((schedule,index) => ( 
-          <ScheduleBox key={index} scheduleData={schedule}/>
-         ))}
+      <div className="w-full flex flex-col gap-10">
+        {schedules.map((schedule, index) => (
+          <ScheduleBox key={index} scheduleData={schedule} />
+        ))}
       </div>
     </div>
   )

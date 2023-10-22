@@ -66,7 +66,7 @@ export const Navbar = () => {
                 "data-[active=true]:text-primary data-[active=true]:font-medium"
               )}
               color="foreground"
-              href={"calander"}
+              href={"home"}
             >
               Home
             </NextLink>
@@ -90,7 +90,7 @@ export const Navbar = () => {
                 "data-[active=true]:text-primary data-[active=true]:font-medium"
               )}
               color="foreground"
-              href={"calander"}
+              href={"about"}
             >
               About
             </NextLink>
@@ -117,13 +117,13 @@ export const Navbar = () => {
       <NavbarMenu>
         <div className="mx-4 mt-2 flex flex-col gap-2">
           <NavbarMenuItem key={`1`}>
-            <Link color={"primary"} href="#" size="lg">
+            <Link color={"primary"} href="home" size="lg">
               Home
             </Link>
-            <Link color={"primary"} href="#" size="lg">
+            <Link color={"primary"} href="calander" size="lg">
               Calander
             </Link>
-            <Link color={"primary"} href="#" size="lg">
+            <Link color={"primary"} href="about" size="lg">
               About
             </Link>
           </NavbarMenuItem>
