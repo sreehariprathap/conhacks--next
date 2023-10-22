@@ -22,17 +22,23 @@ import NextLink from "next/link"
 import clsx from "clsx"
 import { Button } from "@nextui-org/react"
 import { ThemeSwitch } from "@/components/theme-switch"
+import React, { useState } from "react"
+import Image from "next/image"
 
-const isLoggedIn = true
 export const Navbar = () => {
-
   return (
-    <NextUINavbar maxWidth="xl" position="sticky">
+    <NextUINavbar maxWidth="xl" position="sticky" className="p-5">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
-            <p className="font-bold text-inherit text-2xl">
-              lecture<span className="font-thin text-blue-400">life</span>
+            <Image
+              src={"/favicon.ico"}
+              width={"100"}
+              height={"50"}
+              alt="logo"
+            />
+            <p className="font-bold text-inherit text-3xl">
+              lecture<span className="font-normal text-cyan-400">life</span>
             </p>
           </NextLink>
         </NavbarBrand>
@@ -84,11 +90,10 @@ export const Navbar = () => {
           <ThemeSwitch />
         </NavbarItem>
 
-        <UserData/>
+        <UserData />
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-       
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>
@@ -112,11 +117,14 @@ export const Navbar = () => {
   )
 }
 
-const UserData: React.FC<any> = ({ isLoggedIn }) => {
+const UserData: React.FC<any> = ({}) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   return (
     <div>
       {!isLoggedIn ? (
-        <Button color="primary">Login</Button>
+        <Button color="primary" onClick={() => setIsLoggedIn(true)}>
+          Login
+        </Button>
       ) : (
         <Dropdown placement="bottom-end">
           <DropdownTrigger>
@@ -141,7 +149,11 @@ const UserData: React.FC<any> = ({ isLoggedIn }) => {
             <DropdownItem key="system">System</DropdownItem>
             <DropdownItem key="configurations">Configurations</DropdownItem>
             <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-            <DropdownItem key="logout" color="danger">
+            <DropdownItem
+              key="logout"
+              color="danger"
+              onClick={() => setIsLoggedIn(false)}
+            >
               Log Out
             </DropdownItem>
           </DropdownMenu>
