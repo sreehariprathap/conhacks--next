@@ -158,13 +158,14 @@ const UserData: React.FC<any> = ({ user }) => {
               <p className="font-semibold">Signed in as</p>
               <p className="font-semibold">{user.email}</p>
             </DropdownItem>
-            <DropdownItem
-              key="logout"
-              color="danger"
-              onClick={() => redirect('/auth/logout')} 
-            >
-              Log Out
-            </DropdownItem>
+              <DropdownItem
+                key="logout"
+                color="danger"
+              >
+                <form action="/auth/logout" method="post">
+                  <button>Log out</button>
+                </form>
+              </DropdownItem>
           </DropdownMenu>
         </Dropdown>
       )}
