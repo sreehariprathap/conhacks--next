@@ -1,45 +1,26 @@
 import CalanderComponent from "@/components/Calander"
 import Event from "@/components/Event"
 import EventCard from "@/components/EventCard"
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import React from "react"
+import { cookies } from 'next/headers';
+import { redirect } from "next/navigation"
+import { Database } from "@/types/supabase"
+import dayjs from "dayjs"
 
-const evenetsAndClasses = [
-  {
-    type: "VEVENT",
-    params: [],
-    dtstamp: [Date],
-    summary: "Class",
-    location: "ENGL71200-23F-Sec1-Scientific and Technical Commun",
-    description:
-      "https://conestogac.zoom.us/j/93579562472?pwd=Q0tOY0QyYXRWRys1Z0lyS3gxeVFSUT09",
-    class: "PUBLIC",
-    start: [Date],
-    datetype: "date-time",
-    end: [Date],
-    uid: "6606-3176568@conestoga.desire2learn.com",
-    sequence: "1",
-    lastmodified: [Date],
-    method: "PUBLISH",
-  },
-  {
-    type: "VEVENT",
-    params: [],
-    dtstamp: [Date],
-    summary: "Class",
-    location: "ENGL71200-23F-Sec1-Scientific and Technical Commun",
-    description:
-      "https://conestogac.zoom.us/j/93579562472?pwd=Q0tOY0QyYXRWRys1Z0lyS3gxeVFSUT09",
-    class: "PUBLIC",
-    start: [Date],
-    datetype: "date-time",
-    end: [Date],
-    uid: "6606-3176568@conestoga.desire2learn.com",
-    sequence: "1",
-    lastmodified: [Date],
-    method: "PUBLISH",
-  },
-]
-const Calander = () => {
+export default async function Calander() {
+  const supabase = createServerComponentClient<Database>({ cookies });
+
+  const { data: { session } } = await supabase.auth.getSession();
+
+  if (!session) return redirect('/login');
+
+  const events = await supabase.from('events')
+      .select()
+      .eq('user_id', session.user.id)
+      .gte('start_timestamp', dayjs().startOf('day'))
+      .lte('end_timestamp', dayjs().endOf('day'));
+
   return (
     <div className="flex flex-col">
       <h1 className="text-3xl font-medium mb-3">Calander</h1>
@@ -48,13 +29,14 @@ const Calander = () => {
           <CalanderComponent />
         </div>
         <div className="flex flex-col gap-3">
-          {evenetsAndClasses.map((event, index) => (
-            <Event eventData={event} key={index} />
+          {events.count === 0 ? (
+            <p>No events found for the day!</p>
+          ) : null}
+          {events.data?.map((event) => (
+            <Event eventData={event} key={event.event_id} isFirstItem={true} />
           ))}
         </div>
       </div>
     </div>
   )
 }
-
-export default Calander

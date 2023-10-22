@@ -15,17 +15,33 @@ import {
   DropdownMenu,
   Avatar,
 } from "@nextui-org/react"
-
 import { Link } from "@nextui-org/link"
 import { link as linkStyles } from "@nextui-org/theme"
 import NextLink from "next/link"
 import clsx from "clsx"
 import { Button } from "@nextui-org/react"
 import { ThemeSwitch } from "@/components/theme-switch"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Image from "next/image"
+import { User, createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { redirect } from "next/navigation"
 
 export const Navbar = () => {
+  const supabase = createClientComponentClient();
+
+  const [user, setUser] = useState<User>();
+  
+  useEffect(() => {
+    async function getUser() {
+      let session = await supabase.auth.getSession();
+
+      console.log({ session });
+      setUser(session.data.session?.user);
+    }
+
+    getUser();
+  }, [])
+
   return (
     <NextUINavbar maxWidth="xl" position="sticky" className="p-5">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -90,7 +106,7 @@ export const Navbar = () => {
           <ThemeSwitch />
         </NavbarItem>
 
-        <UserData />
+        <UserData user={user} />
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
@@ -117,12 +133,11 @@ export const Navbar = () => {
   )
 }
 
-const UserData: React.FC<any> = ({}) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+const UserData: React.FC<any> = ({ user }) => {
   return (
     <div>
-      {!isLoggedIn ? (
-        <Button color="primary" onClick={() => setIsLoggedIn(true)}>
+      {!user ? (
+        <Button color="primary" onClick={() => redirect('/login')}>
           Login
         </Button>
       ) : (
@@ -141,18 +156,12 @@ const UserData: React.FC<any> = ({}) => {
           <DropdownMenu aria-label="Profile Actions" variant="flat">
             <DropdownItem key="profile" className="h-14 gap-2">
               <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">zoey@example.com</p>
+              <p className="font-semibold">{user.email}</p>
             </DropdownItem>
-            <DropdownItem key="settings">My Settings</DropdownItem>
-            <DropdownItem key="team_settings">Team Settings</DropdownItem>
-            <DropdownItem key="analytics">Analytics</DropdownItem>
-            <DropdownItem key="system">System</DropdownItem>
-            <DropdownItem key="configurations">Configurations</DropdownItem>
-            <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
             <DropdownItem
               key="logout"
               color="danger"
-              onClick={() => setIsLoggedIn(false)}
+              onClick={() => redirect('/auth/logout')} 
             >
               Log Out
             </DropdownItem>
