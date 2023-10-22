@@ -6,6 +6,7 @@ import { Providers } from "./providers"
 import { Navbar } from "@/components/navbar"
 import { Link } from "@nextui-org/link"
 import clsx from "clsx"
+import QuickAccess from "@/components/QuickAccess"
 
 export const metadata: Metadata = {
   title: {
@@ -39,9 +40,13 @@ export default function RootLayout({
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+          <Navbar />
           <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
             {children}
           </main>
+          <div className="fixed bottom-0 w-full flex justify-center p-4 lg:hidden">
+            <QuickAccess />
+          </div>
         </Providers>
       </body>
     </html>
