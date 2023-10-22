@@ -9,7 +9,11 @@ const page = () => {
       <div className="bg-transparent text-white flex items-center justify-center flex-col h-screen">
         <div className="profile-container text-center p-4">
           <div className="flex justify-center ">
-            <img src="/luffy.avif"  className="borderd rounded-full w-96 h-96 cover"/>
+          <img
+              src="/image-user.avif"
+              className="borderd rounded-full w-82 h-82 object-cover"
+              alt="user"
+            />
           </div>
         
           <div className="user-info p-4">
