@@ -2,6 +2,8 @@
 import React, { useEffect } from "react"
 import Image from "next/image"
 import { Button } from "@nextui-org/react"
+import { redirect } from "next/navigation"
+import Link from "next/link"
 
 export default function Home() {
   useEffect(() => {
@@ -26,9 +28,12 @@ export default function Home() {
         <p className="intro-text">
           Your College Schedule Planner and Transportation Guide
         </p>
-        <Button color="primary">
-          Get Started
-        </Button>
+        <Link href={'/home'}>
+          <Button color="primary">
+            Get Started
+          </Button>
+        </Link>
+        
       </div>
 
       <div className="features-container">
