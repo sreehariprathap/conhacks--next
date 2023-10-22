@@ -19,6 +19,10 @@ export default async function Login() {
       <input name="email" />
       <label htmlFor="password">Password</label>
       <input type="password" name="password" />
+      <label htmlFor="calendar">Calendar</label>
+      <input name="calendar" />
+      <label htmlFor="address">Address</label>
+      <input name="address" />
       <button>Sign In</button>
       <button formAction="/auth/sign-up">Sign Up</button>
     </form>
